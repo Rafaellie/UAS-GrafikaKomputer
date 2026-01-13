@@ -148,6 +148,135 @@ renderer.domElement.addEventListener("click", () => {
   renderer.domElement.requestPointerLock();
 })
 
+// ensiklopedia data ikan
+const fishEncyclopedia = [
+  { 
+    name: "Emperor Angelfish", 
+    scientificName: "Pomacanthus imperator",
+    family: "Pomacanthidae",
+    habitat: "Indo-Pacific coral reefs",
+    size: "30-40 cm", 
+    color: 0x4169E1,
+    rarity: "Uncommon",
+    pattern: "Blue body with yellow stripes",
+    diet: "Sponges, tunicates, algae",
+    description: "One of the most striking fish in the ocean, the Emperor Angelfish displays magnificent blue and yellow horizontal stripes.",
+    funFact: "Young Emperor Angelfish look so different from adults that they were once thought to be a separate species!"
+  },
+  { 
+    name: "Mandarin Fish", 
+    scientificName: "Synchiropus splendidus",
+    family: "Callionymidae",
+    habitat: "Western Pacific coral reefs",
+    size: "6 cm", 
+    color: 0xFF6B35,
+    rarity: "Rare",
+    pattern: "Blue, orange, and green swirls",
+    diet: "Small crustaceans",
+    description: "Perhaps the most colorful fish in the sea, the Mandarin Fish is a psychedelic masterpiece of blues, oranges, and greens.",
+    funFact: "They have no scales! Instead, their skin secretes a toxic mucus that protects them."
+  },
+  { 
+    name: "Clownfish", 
+    scientificName: "Amphiprion ocellaris",
+    family: "Pomacentridae",
+    habitat: "Indo-Pacific anemones",
+    size: "11 cm", 
+    color: 0xFF8C00,
+    rarity: "Common",
+    pattern: "Orange with white bands",
+    diet: "Algae, zooplankton",
+    description: "Clownfish have a special relationship with sea anemones. They're immune to the anemone's sting and live safely among their tentacles.",
+    funFact: "All clownfish are born male! The dominant male will change sex to become female if needed."
+  },
+  { 
+    name: "Lionfish", 
+    scientificName: "Pterois volitans",
+    family: "Scorpaenidae",
+    habitat: "Indo-Pacific and Atlantic reefs",
+    size: "30-38 cm", 
+    color: 0xDC143C,
+    rarity: "Rare",
+    pattern: "Red, white, and brown stripes",
+    diet: "Small fish and invertebrates",
+    description: "The Lionfish is both beautiful and dangerous, with venomous spines on its dorsal fins. They're voracious hunters.",
+    funFact: "Lionfish have become invasive in the Atlantic Ocean with no natural predators!"
+  },
+  { 
+    name: "Royal Gramma", 
+    scientificName: "Gramma loreto",
+    family: "Grammatidae",
+    habitat: "Caribbean coral reefs",
+    size: "8 cm", 
+    color: 0x9966FF,
+    rarity: "Uncommon",
+    pattern: "Purple front, yellow back",
+    diet: "Zooplankton, small crustaceans",
+    description: "This tiny Caribbean beauty displays stunning two-tone coloration: deep royal purple on the front and bright golden yellow on the rear.",
+    funFact: "Royal Grammas can swim upside-down just as easily as right-side up!"
+  },
+  { 
+    name: "Regal Tang", 
+    scientificName: "Paracanthurus hepatus",
+    family: "Acanthuridae",
+    habitat: "Indo-Pacific coral reefs",
+    size: "30 cm", 
+    color: 0x1E90FF,
+    rarity: "Common",
+    pattern: "Electric blue with black markings",
+    diet: "Plankton and algae",
+    description: "The Regal Tang has an electric blue body with bold black markings and a bright yellow tail.",
+    funFact: "Regal Tangs can 'play dead' by lying on their side when threatened!"
+  },
+  { 
+    name: "Moorish Idol", 
+    scientificName: "Zanclus cornutus",
+    family: "Zanclidae",
+    habitat: "Indo-Pacific coral reefs",
+    size: "23 cm", 
+    color: 0xFFD700,
+    rarity: "Epic",
+    pattern: "White, black, and yellow bands",
+    diet: "Sponges and tunicates",
+    description: "The Moorish Idol is one of the most recognizable reef fish with its distinctive elongated dorsal fin.",
+    funFact: "Ancient Moors believed these fish brought happiness!"
+  },
+  { 
+    name: "Discus Fish", 
+    scientificName: "Symphysodon aequifasciatus",
+    family: "Cichlidae",
+    habitat: "Amazon River Basin",
+    size: "20-25 cm", 
+    color: 0xFF69B4,
+    rarity: "Epic",
+    pattern: "Round body with vibrant stripes",
+    diet: "Worms, crustaceans, plant matter",
+    description: "Known as the 'King of the Aquarium,' Discus fish are prized for their perfectly round shape and stunning colors.",
+    funFact: "Discus parents produce special mucus that their babies feed on!"
+  },
+];
+
+// Fish detail UI
+
+const fishUI = document.createElement('div');
+fishUI.style.position = 'absolute';
+fishUI.style.top = '50%';
+fishUI.style.left = '50%';
+fishUI.style.transform = 'translate(-50%, -50%)';
+fishUI.style.background = 'rgba(255, 248, 235, 0.98)';
+fishUI.style.color = '#3e2723';
+fishUI.style.padding = '40px';
+fishUI.style.borderRadius = '20px';
+fishUI.style.display = 'none';
+fishUI.style.maxWidth = '500px';
+fishUI.style.fontFamily = 'Georgia, serif';
+fishUI.style.boxShadow = '0 10px 50px rgba(0,0,0,0.5)';
+fishUI.style.border = '3px solid #8b6f47';
+fishUI.style.zIndex = '1000';
+fishUI.style.maxHeight = '80vh';
+fishUI.style.overflowY = 'auto';
+document.body.appendChild(fishUI);
+
 let time = 0;
 function animate() {
   requestAnimationFrame(animate);
@@ -183,3 +312,5 @@ function animate() {
 }
 
 animate();
+
+

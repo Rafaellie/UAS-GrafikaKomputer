@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"; 
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xfff4e6);
@@ -158,6 +159,7 @@ const fishEncyclopedia = [
     size: "30-40 cm", 
     color: 0x4169E1,
     rarity: "Uncommon",
+    image: "assets/emperor_angelfish.jpeg",
     pattern: "Blue body with yellow stripes",
     diet: "Sponges, tunicates, algae",
     description: "One of the most striking fish in the ocean, the Emperor Angelfish displays magnificent blue and yellow horizontal stripes.",
@@ -171,6 +173,7 @@ const fishEncyclopedia = [
     size: "6 cm", 
     color: 0xFF6B35,
     rarity: "Rare",
+    image: "assets/mandarin_fish.jpeg",
     pattern: "Blue, orange, and green swirls",
     diet: "Small crustaceans",
     description: "Perhaps the most colorful fish in the sea, the Mandarin Fish is a psychedelic masterpiece of blues, oranges, and greens.",
@@ -184,6 +187,7 @@ const fishEncyclopedia = [
     size: "11 cm", 
     color: 0xFF8C00,
     rarity: "Common",
+    image: "assets/clownfish.jpeg",
     pattern: "Orange with white bands",
     diet: "Algae, zooplankton",
     description: "Clownfish have a special relationship with sea anemones. They're immune to the anemone's sting and live safely among their tentacles.",
@@ -197,6 +201,7 @@ const fishEncyclopedia = [
     size: "30-38 cm", 
     color: 0xDC143C,
     rarity: "Rare",
+    image: "assets/lionfish.jpeg",
     pattern: "Red, white, and brown stripes",
     diet: "Small fish and invertebrates",
     description: "The Lionfish is both beautiful and dangerous, with venomous spines on its dorsal fins. They're voracious hunters.",
@@ -210,6 +215,7 @@ const fishEncyclopedia = [
     size: "8 cm", 
     color: 0x9966FF,
     rarity: "Uncommon",
+    image: "assets/royal_gamma.jpeg",
     pattern: "Purple front, yellow back",
     diet: "Zooplankton, small crustaceans",
     description: "This tiny Caribbean beauty displays stunning two-tone coloration: deep royal purple on the front and bright golden yellow on the rear.",
@@ -223,6 +229,7 @@ const fishEncyclopedia = [
     size: "30 cm", 
     color: 0x1E90FF,
     rarity: "Common",
+    image: "assets/regal_tang.jpeg",
     pattern: "Electric blue with black markings",
     diet: "Plankton and algae",
     description: "The Regal Tang has an electric blue body with bold black markings and a bright yellow tail.",
@@ -236,6 +243,7 @@ const fishEncyclopedia = [
     size: "23 cm", 
     color: 0xFFD700,
     rarity: "Epic",
+    image: "assets/Moorish_Idol.jpeg",
     pattern: "White, black, and yellow bands",
     diet: "Sponges and tunicates",
     description: "The Moorish Idol is one of the most recognizable reef fish with its distinctive elongated dorsal fin.",
@@ -249,6 +257,7 @@ const fishEncyclopedia = [
     size: "20-25 cm", 
     color: 0xFF69B4,
     rarity: "Epic",
+    image: "assets/discus_fish.jpeg",
     pattern: "Round body with vibrant stripes",
     diet: "Worms, crustaceans, plant matter",
     description: "Known as the 'King of the Aquarium,' Discus fish are prized for their perfectly round shape and stunning colors.",
@@ -257,7 +266,6 @@ const fishEncyclopedia = [
 ];
 
 // Fish detail UI
-
 const fishUI = document.createElement('div');
 fishUI.style.position = 'absolute';
 fishUI.style.top = '50%';
@@ -358,7 +366,7 @@ function openBackpack() {
   if (playerCollection.length === 0) {
     backpackUI.innerHTML = `
       <h1 style="margin: 0 0 20px 0; color: #8b6f47; border-bottom: 2px solid #8b6f47; padding-bottom: 15px;">
-        🎒 My Fish Collection
+        My Fish Collection
       </h1>
       <p style="text-align: center; color: #888; font-size: 18px; padding: 50px;">
         Your collection is empty! Go catch some fish!
@@ -370,7 +378,7 @@ function openBackpack() {
   } else {
     let collectionHTML = `
       <h1 style="margin: 0 0 20px 0; color: #8b6f47; border-bottom: 2px solid #8b6f47; padding-bottom: 15px;">
-        🎒 My Fish Collection (${playerCollection.length} fish)
+        My Fish Collection (${playerCollection.length} fish)
       </h1>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
     `;
@@ -382,7 +390,8 @@ function openBackpack() {
              onmouseover="this.style.transform='scale(1.05)'" 
              onmouseout="this.style.transform='scale(1)'"
              onclick="viewFishDetails(${index})">
-          <div style="width: 80px; height: 80px; background: #${fish.color.toString(16).padStart(6, '0')}; border-radius: 50%; margin: 0 auto 15px; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>
+          <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <img src="${fish.image}" alt="${fish.name}" style=" width: 100%; height: 100%; object-fit: cover;"/> </div>
+
           <h3 style="margin: 10px 0 5px 0; text-align: center; color: #8b6f47;">${fish.name}</h3>
           <p style="margin: 0; text-align: center; font-size: 12px; color: ${rarityColors[fish.rarity]}; font-weight: bold;">${fish.rarity}</p>
           <p style="margin: 5px 0 0 0; text-align: center; font-size: 12px; font-style: italic; color: #666;">${fish.scientificName}</p>
@@ -425,8 +434,19 @@ function showFishEncyclopedia(fish) {
       <em>${fish.scientificName}</em>
     </p>
     
-    <div style="text-align: center; margin: 20px 0;">
-      <div style="display: inline-block; width: 120px; height: 120px; background: #${fish.color.toString(16).padStart(6, '0')}; border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.3);"></div>
+    <div style="text-align:center; margin:20px 0;">
+      <img 
+        src="${fish.image}" 
+        alt="${fish.name}"
+        style="
+          width: 270px;
+          height: 220px;
+          object-fit: cover;
+          border-radius: 20px;
+          border: 4px solid white;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        "
+      />
     </div>
     
     <div style="margin: 25px 0; padding: 20px; background: rgba(139, 111, 71, 0.1); border-radius: 10px;">
@@ -533,16 +553,42 @@ function createSplash() {
   }, 30);
 }
 
+// Fungsi Load Model 
+async function loadModel({path, position = { x: 0, y: 0, z: 0 }, scale = 1}) { 
+  const loader = new GLTFLoader(); 
+  const gltf = await loader.loadAsync(path); 
+  const model = gltf.scene; model.traverse((obj) => { 
+    if (obj.isMesh) {
+        obj.castShadow = true; 
+        obj.receiveShadow = true; 
+      } 
+    }); 
+  
+  model.scale.setScalar(scale); 
+  model.position.set(position.x, position.y, position.z); 
+  scene.add(model); 
+  return model; }
+
+// Fungsi Model 
+async function models() { 
+  await loadModel({ 
+    path: "model/market_props.glb", 
+    position: { x: 0, y: 0, z: 10 }, 
+    scale: 1, 
+  });
+}
+
+models();
+
 let time = 0;
 function animate() {
   requestAnimationFrame(animate);
   time += 0.01;
-  // testCube.rotation.y += 0.01;
-  // testCube.position.y = 0.5 + Math.sin(time * 2) * 0.2;
 
   camera.rotation.order = "YXZ";
   camera.rotation.y = directionLeftRight;
   camera.rotation.x = directionTopBottom;
+  // camera.rotation.z = 0;
 
   const forward = new THREE.Vector3(Math.sin(directionLeftRight), 0, -Math.cos(directionLeftRight)).normalize();
   const right = new THREE.Vector3(Math.cos(directionLeftRight), 0, Math.sin(directionLeftRight)).normalize();

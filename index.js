@@ -95,28 +95,6 @@ testCube.position.set(0, 0.5, -5);
 testCube.castShadow = true;
 scene.add(testCube);
 
-const infoPanel = document.createElement("div");
-infoPanel.style.position = "absolute";
-infoPanel.style.top = "20px";
-infoPanel.style.left = "20px";
-infoPanel.style.background = "rgba(255, 248, 235, 0.95)";
-infoPanel.style.color = "#3e2723";
-infoPanel.style.padding = "20px";
-infoPanel.style.borderRadius = "15px";
-infoPanel.style.fontFamily = "Georgia, serif";
-infoPanel.style.fontSize = "14px";
-infoPanel.style.border = "2px solid #8b6f47";
-infoPanel.innerHTML = `
-  <strong style="color: #8b6f47; font-size: 18px;">🌍 Person 1: Scene Setup</strong><br><br>
-  Scene created<br>
-  Lighting setup (warm cozy)<br>
-  Ground added<br>
-  4 Decorative plants<br>
-  Test cube (red) at center<br><br>
-  <em>Scene is ready for integration!</em>
-`;
-document.body.appendChild(infoPanel);
-
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
